@@ -64,3 +64,47 @@ const beginPrompt = () => {
 };
 
 
+// Executing the options
+
+// View all employees 
+const viewAllEmployees = () => {
+    db.query('SELECT first_name, last_name FROM employee', (err, res) => {
+        if (err) {
+          throw err
+        } else {
+          console.table(res)
+        }
+        beginPrompt();
+    })
+};
+
+// Add an employee
+const addEmployee = () => {
+    inquirer.prompt([{
+        name: 'first_name',
+        type: 'input', 
+        message: "Please enter the employee's first name",
+    },
+    {
+        name: 'last_name',
+        type: 'input', 
+        message: "Please enter the employee's last name"
+    },
+    {
+        name: 'manager_id',
+        type: 'input', 
+        message: "What is the employee's manager's ID? "
+    },
+    ])
+    .then((answers) => {
+        db.query(`INSERT INTO employee(first_name, last_name, role_id, manager_id) values ('${answers.firstName}', '${answers.lastName}', '${answers.newRoleId}', '${answers.newManId}')`, (err, res) => {
+            if (err) {
+                throw err
+            } else {
+                console.table(res)
+            }
+            beginPrompt();
+        });
+    });
+};
+ 
