@@ -108,3 +108,119 @@ const addEmployee = () => {
     });
 };
  
+// View all departments
+const viewAllDepartments = () => {
+    db.query('SELECT * FROM department', (err, res) => {
+        if (err) {
+            throw err
+        } else {
+            console.table(res)
+        }
+        beginPrompt();
+    })
+};
+
+// View all roles
+const viewRoles = () => {
+    db.query('SELECT title FROM role', (err, res) => {
+        if (err) {
+          throw err
+        } else {
+          console.table(res)
+        }
+        beginPrompt();
+    })
+};
+
+// Add a department
+const addDepartment = () => {
+    inquirer.prompt([{
+        name: 'newDepartment', 
+        type: 'input', 
+        message: 'Please enter the new department'
+    }])
+    .then((answers) => {
+        db.query(`INSERT INTO department(name) values ('${answers.newDepartment}')`, (err, res) => {
+            if (err) {
+                throw err
+            } else {
+                console.table(res)
+            }
+            beginPrompt();
+        });
+    });
+};
+
+// Add a role
+const addRole = () => {
+    inquirer.prompt([{
+        name: 'new_role',
+        type: 'input', 
+        message: "Please add the new role"
+    },
+    {
+        name: 'salary',
+        type: 'input',
+        message: 'Please add the salary for the role (numbers only)'
+    },
+    {
+        type: "input",
+        name: "newDepId",
+            message: "Please enter the department ID",
+    }
+    ])
+    .then((answers) => {
+        db.query(`INSERT INTO role(title, salary, department_id) values ('${answers.newRole}', '${answers.newSalary}', '${answers.newDepId}')`, (err, res) => {
+            if (err) {
+                throw err
+            } else {
+                console.table(res)
+            }
+        beginPrompt();
+        });
+    });
+};
+
+// Update employee
+const updateRole = () => {
+    connection.promise().query('SELECT * FROM employee')
+        .then((res) => {
+            return res[0].map(employee => {
+                return {
+                    name: employee.first_name,
+                    value: employee.id
+                }
+            })
+        })
+        .then(async (employeeList) => {
+            return inquirer.prompt([{
+                type: 'list',
+                name: 'employeeListId',
+                choices: employeeList,
+                message: 'Please select the employee you want to update'
+            },
+            {
+                type: 'list',
+                name: 'roleId',
+                choices: await selectRole(),
+                message: 'Please select the role.'
+            }])
+        })
+        .then(answer => {
+            console.log(answer);
+            return connection.promise().query("UPDATE employee SET  role_id = ? WHERE id = ?",
+                [
+                    answer.roleId,
+                    answer.employeeListId,
+                ],
+            );
+        })
+        .then(res => {
+            console.log('Updated Manager Successfully')
+            runList();
+        })
+        .catch(err => {
+            throw err
+        });
+}
+
