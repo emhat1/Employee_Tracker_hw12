@@ -1,9 +1,10 @@
 // Setting up dependencies
-const fs = require('fs');
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
+const consoleTable = require('console.table')
 
-// Conection of server and database
+// Connection of server and database
+    // need to set up .env file stuff
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
