@@ -203,12 +203,12 @@ const updateRole = () => {
                 type: 'list',
                 name: 'roleId',
                 choices: await selectRole(),
-                message: 'Please select the role.'
+                message: 'Please select the role'
             }])
         })
         .then(answer => {
             console.log(answer);
-            return connection.promise().query("UPDATE employee SET  role_id = ? WHERE id = ?",
+            return connection.promise().query("UPDATE employee SET role_id = ? WHERE id = ?",
                 [
                     answer.roleId,
                     answer.employeeListId,
@@ -216,7 +216,7 @@ const updateRole = () => {
             );
         })
         .then(res => {
-            console.log('Updated Manager Successfully')
+            console.log('Updated employee successfully')
             runList();
         })
         .catch(err => {
@@ -224,3 +224,42 @@ const updateRole = () => {
         });
 }
 
+// Delete employee
+const deleteEmployee = () => {
+    connection.promise().query('SELECT * FROM employee')
+        .then((res) => {
+            return res[0].map(emp => {
+                return {
+                    name: employee.first_name,
+                    value: employee.id
+                }
+            })
+        })
+        .then((employees) => {
+            return inquirer.prompt([{
+                type: 'list',
+                name: 'employeeId',
+                choices: employees,
+                message: 'Please select the employee to delete'
+            }])
+        })
+        .then(answer => {
+            console.log(answer);
+            return connection.promise().query('DELETE FROM Employee WHERE id = ?', answer.employeeId);
+        })
+        .then(res => {
+            // console.log(res);
+            console.log('Employee deleted successfully')
+            runList();
+        })
+        .catch(err => {
+            throw err
+        });
+}
+
+// Exit the app
+const quit = () => { 
+    process.exit(); 
+};
+
+beginPrompt();
