@@ -121,7 +121,7 @@ const viewAllDepartments = () => {
 
 // View all roles
 const viewRoles = () => {
-    db.query('SELECT title FROM role', (err, res) => {
+    db.query('SELECT title FROM roles', (err, res) => {
         if (err) {
           throw err
         } else {
@@ -169,7 +169,7 @@ const addRole = () => {
     }
     ])
     .then((answers) => {
-        db.query(`INSERT INTO role(title, salary, department_id) values ('${answers.newRole}', '${answers.newSalary}', '${answers.newDepId}')`, (err, res) => {
+        db.query(`INSERT INTO roles(title, salary, department_id) values ('${answers.newRole}', '${answers.newSalary}', '${answers.newDepId}')`, (err, res) => {
             if (err) {
                 throw err
             } else {

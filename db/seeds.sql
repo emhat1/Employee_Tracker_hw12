@@ -6,7 +6,7 @@ VALUES
 (4,'Transfiguration'),
 (5,'Charms');
 
-INSERT INTO role (title, salary, department_id)
+INSERT INTO roles (title, salary, department_id)
 VALUES
 ('Monster wrangler', 178000, 1),
 ('Ingredient collector', 167000, 2),
