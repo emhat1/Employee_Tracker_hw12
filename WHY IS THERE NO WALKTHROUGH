@@ -1,0 +1,13 @@
+I know one criteria was for a walkthrough of this app to deomnstrate functionality
+
+Unfortunately, no matter how much I tinkered, it would not work on my computer - it would display the opening menu, then finish
+
+My husband (25 years IT experience) tried unsuccessfully to debug it, and it still wouldn't work
+
+A friend (25 years web developer experience) downloaded the files from my repository to her Mac ... and it worked.  Perfectly.  And she could find no errors in the code
+
+So I redownloaded the files from the repository.  It still kept ending right after showing the main menu
+
+I honestly don't know where to go from here.  Two professionals couldn't find the reason for it not working and couldn't find any bugs in my code to cause it
+
+If you can shed light on it, I'd love to hear your feedback
